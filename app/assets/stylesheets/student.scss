@@ -267,3 +267,21 @@ textarea[name='interventions-comment'] {
   min-width: 100%;
   padding: 10px;
 }
+
+.comment {
+  margin-bottom: 20px;
+
+  .comment-date {
+    color: $light-gray;
+    margin-top: 8px;
+  }
+
+  .save-btn {
+    float: right;
+  }
+
+  .cancel {
+    padding-top: 8px;
+    padding-right: 20px;
+  }
+}

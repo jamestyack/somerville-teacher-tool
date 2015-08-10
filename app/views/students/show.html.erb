@@ -83,6 +83,7 @@
 
       </div>
 
+<!-- START INTERVENTION -->
       <div id="interventions-row">
         <h1>Interventions</h1>
 
@@ -117,6 +118,7 @@
         <button type="button" onclick="" class="btn">Add intervention</button>
       </div>
 
+<!-- START ADD INTERVENTION -->
       <div id="add-interventions-row">
         <h1>Add Interventions</h1>
 
@@ -152,7 +154,51 @@
       </div>
 
     </div>
+<!-- END INTERVENTION -->
 
+
+<!-- START COMMENTS -->
+<div id="school-year-boxes-row" class="row">
+<div class="school-year">
+
+    <div class="year">
+      <h1>1901</h1>
+    </div>
+
+<!-- START COMMENT -->
+      <div class="section comments-section">
+        <h2 class="section-header">Comments</h2>
+
+        <div class="comment">
+          <p><strong>Kenn Scott</strong></p>
+          <p>It was created by Michelangelo while trying some new pizza recipes. Mikey made the shake because the turtles love milkshakes and also love pizza so he thought.</p>
+          <p class="comment-date">July 21, 2015</p>
+        </div>
+
+        <div class="comment">
+          <p><strong>Kenn Scott</strong></p>
+          <p>It was created by Michelangelo while trying some new pizza recipes. Mikey made the shake because the turtles love milkshakes and also love pizza so he thought.</p>
+          <p class="comment-date">July 21, 2015</p>
+        </div>
+
+        <button type="button" onclick="" class="btn">Add comment</button>
+
+      </div>
+
+<!-- START ADD COMMENT -->
+      <div class="section add-comment-section">
+        <h2 class="section-header">Add comment</h2>
+        <div class="comment">
+          <textarea value="" onClick="this.value='';" name="interventions-comment" cols="40" rows="5">Add comment</textarea>
+
+          <button type="button" onclick="" class="btn save-btn">Save</button>
+          <a href="#" class="save-btn cancel">Cancel</a>
+        </div>
+      </div>
+
+</div>
+</div>
+<!-- END COMMENT -->
 
     <div id="school-year-boxes-row" class="row">
       <% if @student.school_years.present? %>

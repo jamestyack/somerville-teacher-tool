@@ -2,7 +2,8 @@ class StudentRowsQuery < Struct.new :homeroom
 
   def student_attribute_rows
     sql = \
-            "SELECT
+        <<-SQL
+            SELECT
               students.id as student_id,
               race,
               first_name,
@@ -18,12 +19,14 @@ class StudentRowsQuery < Struct.new :homeroom
               limited_english_proficiency,
               level,
               explanation
-            FROM students
+            FROM 
+                students as s
             LEFT JOIN student_risk_levels
               ON student_risk_levels.student_id = students.id
             WHERE homeroom_id = #{homeroom.id}
             ORDER BY
-              level DESC NULLS LAST;"
+              level DESC NULLS LAST;
+  SQL
     rows = []
     ActiveRecord::Base.connection.execute(sql).each do |row|
       rows << row
@@ -62,5 +65,52 @@ class StudentRowsQuery < Struct.new :homeroom
       rows << row
     end
     return rows
+  end
+
+  def single_query
+      <<-SQL
+        select distinct 
+            on (srl.level, s.id, a.family, a.subject)
+            s.id,
+            s.race,
+            s.first_name,
+            s.last_name,
+            s.grade,
+            s.program_assigned,
+            s.home_language,
+            s.free_reduced_lunch,
+            s.sped_placement,
+            s.disability,
+            s.sped_level_of_need,
+            s.plan_504,
+            s.limited_english_proficiency,
+            srl.level,
+            srl.explanation,
+            a.family,
+            a.subject,
+            sa.scale_score,
+            sa.growth_percentile,
+            sa.percentile_rank,
+            sa.instructional_reading_level,
+            sa.performance_level,
+            sa.date_taken
+        from
+            students as s,
+            assessments as a,
+            student_assessments as sa,
+            student_risk_levels as srl
+        where
+            s.id = sa.student_id and
+            s.id = srl.student_id and
+            sa.assessment_id = a.id and
+            s.homeroom_id = 1 and
+            a.family in ('MCAS', 'STAR', 'ACCESS', 'DIBELS')
+        order by
+            srl.level DESC NULLS LAST,
+            s.id,
+            a.family,
+            a.subject,
+            sa.date_taken DESC NULLS LAST;
+      SQL
   end
 end
